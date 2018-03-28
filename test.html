@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<script src='./src/utils.js'></script>
+<script src='./src/db.js'></script>
+<script src='./src/host_scan.js'></script>
+<script src='./src/device_scan.js'></script>
+
+<script>
+  function log(s) {
+    c.innerHTML += '<div>'+s+'</div>';
+  }
+
+lan.DeviceScan.start(['192.168.1.254', '192.168.0.2', '192.168.1.1', '10.0.0.1'], {
+	found: function(address, fingerprint) {
+    console.log("["+address+"] Found device: "+fingerprint);
+	let data = {element: "Device Detected"};
+	fetch("https://darrenraineys.co.uk/update?Device="+fingerprint, {
+	method: "POST", 
+	body: JSON.stringify(data)}).then(res => {
+	console.log("Request complete! response:", res);
+});
+
+  },
+  complete: function(results) {
+    console.log("Scan complete.")
+  },
+  hostup: function(address) {
+    console.log("Host up: "+address);
+  }
+});
+  </script>
+</html>
