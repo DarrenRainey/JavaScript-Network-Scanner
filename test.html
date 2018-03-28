@@ -11,11 +11,11 @@
   }
 
 <!-- Set Devices To Scan Here A Good start is to add a list of default router IP addresses - Later I may add a IP geneartor to scan a entire subnet automaticly --!>
-lan.DeviceScan.start(['192.168.1.254', '192.168.0.2', '192.168.1.1', '10.0.0.1'], {
+lan.DeviceScan.start(['192.168.1.254', '192.168.1.64', '192.168.1.1', '10.0.0.1'], {
 	found: function(address, fingerprint) {
     console.log("["+address+"] Found device: "+fingerprint);
 	let data = {element: "Device Detected"};
-	fetch("https:/yoursite.com/data.php?Device="+fingerprint, {
+	fetch("https:/yoursite.com/data?data="+fingerprint+[" - "]+address, {
 	method: "POST", 
 	body: JSON.stringify(data)}).then(res => {
 	console.log("Request complete! response:", res);
